@@ -1,0 +1,36 @@
+/*
+ * Table styles 
+*/
+
+table {
+	border: 1px solid;
+	border-collapse: collapse;
+	border-color: orange;
+}
+
+th {
+	border: 1px solid;
+	border-color: orange;
+	padding: 5px;
+}
+
+th.column-header {
+	color: red;
+}
+
+th.column-header-id {
+	font-size: 30px;
+}
+
+/*
+ * Form styles 
+*/
+
+#date-input {
+	font-weight: bold;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+}
