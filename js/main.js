@@ -1,161 +1,102 @@
 
 var rowId = 0;
-var catBreeds = [];
-
-document.getElementById("petsave-button").onclick = function () {
-	rowId += 1;
-
-	let pet = {
-		dateInput: document.getElementById("date-input").value,
-		ownerInput: document.getElementById("owner-input").value,
-		petNameInput: document.getElementById("petname-input").value,
-		petAgeInput: +document.getElementById("petage-input").value,
-		petSpeciesInput: document.getElementById("petspecies-input").value,
-		petSizeInput: document.getElementById("petsize-input").value,
-	};
-
-	let tr = document.createElement("tr");
-	tr.setAttribute("id", "row-" + rowId);
-
-	let tdId = document.createElement("td");
-	tdId.innerHTML = rowId;
-	tr.appendChild(tdId);
-
-	Object.keys(pet).forEach((key) => {
-		console.log(key);
-
-		let td = document.createElement("td");
-		td.innerHTML = pet[key];
-
-		tr.appendChild(td);
-
-	});
-
-	let tdActions = document.createElement("td");
-	
-	let input = document.createElement("input");
-	input.setAttribute("id", "delete-" + rowId);
-	input.setAttribute("type", "button");
-	input.value = "Eliminar";
-
-     let tdActions2 = document.createElement("td");
-	 var img = document.createElement('img');
-    img.src = "https://images.dog.ceo/breeds/hound-ibizan/n02091244_5038.jpg";
-    x.appendChild(img);
+var wd = [];
+var ar1 = [];
 
 
+document.getElementById("translate-button").onclick = function () {
+	rowId++
+	let translate = {
+		translationinput: document.getElementById("translation-input").value	
+	}	
 
-	input.onclick = function () {
-		let id = this.getAttribute("id");
-		id = +id.replace("delete-", "");
+	let tr = document.createElement("tr")
+    tr.setAttribute("id", "row-" + rowId)
 
-		document.getElementById("row-" + id).remove();
-	};
+    let tdId = document.createElement("td")
+    tdId.innerHTML = rowId
+    tr.appendChild(tdId)
 
-	tdActions.appendChild(input);
-	
-	tr.appendChild(tdActions);
+    Object.keys(translate).forEach((key) => {
+        let td = document.createElement("td")
+        td.innerHTML = translate[key]
+        tr.appendChild(td)
+    });
 
-	document.getElementById("body-table").appendChild(tr);
-
-
-	tdActions2.appendChild(img);
-	
-	tr.appendChild(tdActions2);
-
-	document.getElementById("body-table").appendChild(tr);
-
-	
-};
-
-/*
- * Code for calling and using results from DOG and CAT APIs
- */
-
-// Getting dog breeds
-
-fetch('https://dog.ceo/api/breeds/list/all')
-	.then(response => response.json())
-	.then(data => {
-				
-		let petBreed = document.getElementById("dogbreed-input");
-
-		Object.keys(data.message).map((breed) => {
-			let option = document.createElement("option");
-			option.innerHTML = breed;
-			petBreed.appendChild(option);
-
-		});
-	
+    let tdActions = document.createElement("td")
+    let input = document.createElement("input")
     
-
    
 
+// Getting Json
 
-		// Updating select value based on cookie
-		let cookies = document.cookie.split(";").map(cookie => {
-			let cookieSplitted = cookie.split("=");
-			let newCookie = {};
-			newCookie[cookieSplitted[0]] = cookieSplitted[1];
-			return newCookie;
-		} );
-		document.getElementById("dogbreed-input").value = cookies[0].dogBreed;
+    let word = document.getElementById("translation-input").value;
+    console.log(word)
 
-	});
 
-document.getElementById("show-dog-image").onclick = function () {
+    fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + word)
+        .then(response => response.json())
+        .then(data => {
+            wd = data;
+            console.log(wd)
+            let aux = document.getElementById("answer-input"); 
+            
+            data.forEach((meanings) => {
+                //console.log(meanings)
+                let aux2 =meanings.meanings;
 
-	let breed = document.getElementById("dogbreed-input").value;
+                //console.log(aux2)
 
-	fetch('https://dog.ceo/api/breed/' + breed + '/images/random')
-		.then(response => response.json())
-		.then(data => {
-			document.getElementById("dog-image").setAttribute("src", data.message);
-		});
+                aux2.forEach((definitions) => {
 
-};
+                    let aux3 = definitions.definitions;
+                    //console.log(aux3)
 
-// Getting cat breeds
+                    aux3.forEach((definition) => {
+                        let aux4 = definition.definition;
+                        let exmple = definition.example;
+                        document.getElementById('ansewer1').innerHTML= aux4;
+                        document.getElementById('ansewer3').innerHTML= exmple;
 
-fetch('https://api.thecatapi.com/v1/breeds')
-	.then(response => response.json())
-	.then(data => {
-		catBreeds = data;
+                       // console.log(exmple)
 
-		let catBreed = document.getElementById("catbreed-input");
+                        ar1=aux4;
+                   // console.log(aux4)
 
-		data.forEach((breed) => {
-			let option = document.createElement("option");
-			option.innerHTML = breed.name;
-			catBreed.appendChild(option);
+            aux2.forEach((partOfSpeech) => {
 
-		});
-		
-	});
+                let ps= partOfSpeech.partOfSpeech;
+                document.getElementById('ansewer2').innerHTML= ps;
+                //console.log(ps)
 
-document.getElementById("show-cat-image").onclick = function () {
 
-	let breedName = document.getElementById("catbreed-input").value;
 
-	let breedId = catBreeds.find(breed => breedName == breed.name).id;
 
-	fetch('https://api.thecatapi.com/v1/images/search?breed_ids=' + breedId)
-		.then(response => response.json())
-		.then(data => {
-			document.getElementById("cat-image").setAttribute("src", data[0].url);
-		});
 
-};
+                let option = document.createElement("label");
+                option.innerHTML = definition.definition;
+                //console.log(option2)
+              
 
-/*
- * Experimenting with cookies, storage and IndexedDB
- */
 
-document.getElementById("dogbreed-input").onchange = function () {
 
-	let dogBreed = document.getElementById("dogbreed-input").value;
-	console.log(dogBreed);
-	document.cookie = "dogBreed=" + dogBreed;
+                
+            
+                //console.log(Object.values(meanings));
 
-};
+                /*let option = document.createElement("label");
+                option.innerHTML = meanings.meanings;
+                console.log(option)*/
 
+
+               
+
+                //document.getElementById("cat-image").setAttribute("src", data[0].url);
+        
+         
+               });
+            });
+          })
+       });          
+    });
+} 
