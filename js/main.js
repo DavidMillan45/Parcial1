@@ -56,9 +56,13 @@ document.getElementById("translate-button").onclick = function () {
                         let aux4 = definition.definition;
                         let exmple = definition.example;
                         document.getElementById('ansewer1').innerHTML= aux4;
+                        
+
                         document.getElementById('ansewer3').innerHTML= exmple;
 
+                      console.log(aux4)
                        // console.log(exmple)
+
 
                         ar1=aux4;
                    // console.log(aux4)
@@ -67,7 +71,9 @@ document.getElementById("translate-button").onclick = function () {
 
                 let ps= partOfSpeech.partOfSpeech;
                 document.getElementById('ansewer2').innerHTML= ps;
-                //console.log(ps)
+                console.log(ps)
+
+                console.log(exmple)
 
 
 
